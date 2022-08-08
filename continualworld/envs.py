@@ -18,9 +18,9 @@ def get_mt50() -> metaworld.MT50:
 
 
 MT50 = get_mt50()
-META_WORLD_TIME_HORIZON = 200
+META_WORLD_TIME_HORIZON = 500
 MT50_TASK_NAMES = list(MT50.train_classes)
-MW_OBS_LEN = 12
+MW_OBS_LEN = 39 # v1:12
 MW_ACT_LEN = 4
 
 
@@ -81,15 +81,15 @@ def get_single_env(
 
 
 def assert_equal_excluding_goal_dimensions(os1: gym.spaces.Box, os2: gym.spaces.Box) -> None:
-    assert np.array_equal(os1.low[:9], os2.low[:9])
-    assert np.array_equal(os1.high[:9], os2.high[:9])
-    assert np.array_equal(os1.low[12:], os2.low[12:])
-    assert np.array_equal(os1.high[12:], os2.high[12:])
+    assert np.array_equal(os1.low[:36], os2.low[:36])
+    assert np.array_equal(os1.high[:36], os2.high[:36])
+    # assert np.array_equal(os1.low[12:], os2.low[12:])
+    # assert np.array_equal(os1.high[12:], os2.high[12:])
 
 
 def remove_goal_bounds(obs_space: gym.spaces.Box) -> None:
-    obs_space.low[9:12] = -np.inf
-    obs_space.high[9:12] = np.inf
+    obs_space.low[36:] = -np.inf
+    obs_space.high[36:] = np.inf
 
 
 class ContinualLearningEnv(gym.Env):

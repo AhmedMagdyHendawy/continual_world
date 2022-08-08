@@ -412,6 +412,7 @@ class SAC:
                     obs, reward, done, _ = test_env.step(
                         self.get_action_test(tf.convert_to_tensor(obs), tf.constant(deterministic))
                     )
+                    test_env.render()
                     episode_return += reward
                     episode_len += 1
                 self.logger.store(
